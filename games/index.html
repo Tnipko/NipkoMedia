@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NipkoMedia — Games</title>
+    <meta name="description" content="Games by NipkoMedia. Offline-first experiences designed for reliable play on constrained platforms." />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+</head>
+
+<body>
+
+    <header class="site-header container">
+        <a href="../index.html" aria-label="NipkoMedia Home" style="text-decoration:none;">
+            <div class="logo" role="img" aria-label="NipkoMedia logo"></div>
+        </a>
+
+        <p class="tagline">Offline-first indie games.</p>
+
+        <nav class="nav" aria-label="Primary navigation">
+            <a href="../index.html">Home</a>
+            <a class="active" href="index.html">Games</a>
+            <a href="../studio/index.html">Studio</a>
+            <a href="../press/index.html">Press</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Games</h1>
+
+        <p class="section-lead">
+            Built for reliable offline play, long-form progression, and performance on constrained devices.
+        </p>
+
+        <div class="cards">
+
+            <article class="card" aria-label="Nezdor game card">
+                <h3>Nezdor</h3>
+                <p><strong>Fantasy RPG</strong></p>
+                <p>Explore, craft, fight, and progress through a living low-poly world built for offline play.</p>
+                <p><em>Status:</em> In development (MVP available for review)</p>
+
+                <div class="section-header">
+                    <h4>Screenshots</h4>
+                    <a class="faq-link" id="nezdorFaqLink" href="../faq/nezdor/index.html">FAQ</a>
+                </div>
+
+                <div class="gallery" id="nezdorGallery">
+                    <img src="../assets/img/nezdor/bandits.png" alt="Nezdor bandits encounter">
+                    <img src="../assets/img/nezdor/inn.png" alt="Nezdor inn interior">
+                    <img src="../assets/img/nezdor/king.png" alt="Nezdor king NPC">
+                    <img src="../assets/img/nezdor/skeleton.png" alt="Nezdor skeleton enemy">
+                    <img src="../assets/img/nezdor/wolf.png" alt="Nezdor wolf encounter">
+                    <img src="../assets/img/nezdor/tideback.png" alt="Nezdor beach encounter">
+                </div>
+            </article>
+
+            <article class="card" aria-label="Untitled RTS game card">
+                <h3>Untitled RTS</h3>
+                <p><strong>Top-down Strategy</strong></p>
+                <p>A session-based tactical RTS designed for constrained, offline-first platforms.</p>
+                <p><em>Status:</em> Early concept</p>
+            </article>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© NipkoMedia — Independent Game Studio</p>
+    </footer>
+
+    <!-- Lightbox overlay (must be INSIDE body) -->
+    <div id="lightbox" aria-hidden="true">
+        <img id="lightbox-img" alt="Expanded screenshot">
+    </div>
+
+    <script>
+        (function () {
+            // --- FAQ link: local file vs server-friendly path ---
+            const faqLink = document.getElementById("nezdorFaqLink");
+            if (faqLink) {
+                const localHref = "../faq/nezdor/index.html";
+                const serverHref = "/faq/nezdor/";
+                faqLink.href = (location.protocol === "file:") ? localHref : serverHref;
+            }
+
+            // --- Lightbox ---
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImg = document.getElementById("lightbox-img");
+            const gallery = document.getElementById("nezdorGallery");
+
+            function openLightbox(src, alt) {
+                lightboxImg.src = src;
+                lightboxImg.alt = alt || "Expanded screenshot";
+                lightbox.style.display = "flex";
+                lightbox.setAttribute("aria-hidden", "false");
+            }
+
+            function closeLightbox() {
+                lightbox.style.display = "none";
+                lightbox.setAttribute("aria-hidden", "true");
+                lightboxImg.src = "";
+            }
+
+            // Open on click (event delegation; no inline onclick needed)
+            if (gallery) {
+                gallery.addEventListener("click", function (e) {
+                    const img = e.target.closest("img");
+                    if (!img) return;
+                    openLightbox(img.src, img.alt);
+                });
+            }
+
+            // Close when clicking outside the image
+            if (lightbox) {
+                lightbox.addEventListener("click", function () {
+                    closeLightbox();
+                });
+            }
+            if (lightboxImg) {
+                lightboxImg.addEventListener("click", function (e) {
+                    e.stopPropagation();
+                });
+            }
+
+            // Close on ESC
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape") closeLightbox();
+            });
+        })();
+    </script>
+
+</body>
+</html>
